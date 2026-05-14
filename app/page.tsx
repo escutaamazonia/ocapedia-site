@@ -1,41 +1,54 @@
 import Mapa from "@/components/Mapa"
 
 async function getCategorias() {
-  const res = await fetch("http://localhost:1337/api/categorias", {
-    cache: "no-store",
-  })
+  try {
+    const res = await fetch("http://localhost:1337/api/categorias", {
+      cache: "no-store",
+    })
 
-  const json = await res.json()
-  return json.data || []
+    const json = await res.json()
+    return json.data || []
+  } catch {
+    return []
+  }
 }
 
 async function getProducoes() {
-  const res = await fetch(
-    "http://localhost:1337/api/producoes?populate=*",
-    {
-      cache: "no-store",
-    }
-  )
+  try {
+    const res = await fetch(
+      "http://localhost:1337/api/producoes?populate=*",
+      {
+        cache: "no-store",
+      }
+    )
 
-  const json = await res.json()
-
-  return json.data || []
+    const json = await res.json()
+    return json.data || []
+  } catch {
+    return []
+  }
 }
 
 async function getMulheres() {
-  const res = await fetch("http://localhost:1337/api/mulheres?populate=*", {
-    cache: "no-store",
-  })
+  try {
+    const res = await fetch(
+      "http://localhost:1337/api/mulheres?populate=*&pagination[pageSize]=500",
+      {
+        cache: "no-store",
+      }
+    )
 
-  const json = await res.json()
-  return json.data || []
+    const json = await res.json()
+    return json.data || []
+  } catch {
+    return []
+  }
 }
 
 export default async function OcapediaIndigena() {
   const categoriasApi = await getCategorias()
   const producoes = await getProducoes()
   const mulheres = await getMulheres()
-
   return (
     <div className="min-h-screen bg-[#f3ead8] text-[#1f1b16]">
       <header className="fixed top-0 z-50 w-full border-b border-[#3b3326]/20 bg-[#102214]/95 backdrop-blur">
