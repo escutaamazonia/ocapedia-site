@@ -1,7 +1,9 @@
+import { API_URL } from "@/lib/api"
+
 async function getProducoes() {
   try {
     const res = await fetch(
-      `${API_URL}/api/producoes?populate=*",
+      `${API_URL}/api/producoes?populate=* `,
       {
         cache: "no-store",
       }
@@ -45,7 +47,7 @@ export default async function ProducoesPage() {
 
           const imagem =
             item.imagem?.url
-              ? `http://localhost:1337${item.imagem.url}`
+              ? `${API_URL}${item.imagem.url}`
               : "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop"
 
           return (
