@@ -7,14 +7,14 @@ export default function SobrePage() {
         </p>
 
         <h1 className="mb-8 text-5xl font-black leading-tight">
-          Ocapédia Indígena
+          Ocapédia Afroindígena
         </h1>
 
         <div className="space-y-6 text-lg leading-relaxed text-[#4f4638]">
           <p>
-            A Ocapédia Indígena é uma plataforma digital colaborativa dedicada
+            A Ocapédia Afroindígena é uma plataforma digital colaborativa dedicada
             à memória, comunicação, território e produção de conhecimento de
-            mulheres indígenas, negras, quilombolas, ribeirinhas e mulheres
+            mulheres Afroindígenas, negras, quilombolas, ribeirinhas e mulheres
             trans.
           </p>
 

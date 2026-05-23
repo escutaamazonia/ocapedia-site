@@ -14,6 +14,9 @@ type Mulher = {
   foto?: string
   latitude?: number | string
   longitude?: number | string
+
+  tipo?: string
+  categoria_mapa?: string
 }
 
 export default function Mapa({

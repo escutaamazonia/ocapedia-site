@@ -12,7 +12,7 @@ export default function MetodologiaPage() {
 
         <div className="space-y-6 text-lg leading-relaxed text-[#4f4638]">
           <p>
-            A metodologia da Ocapédia Indígena combina pesquisa documental,
+            A metodologia da Ocapédia Afroindígena combina pesquisa documental,
             escuta territorial, curadoria colaborativa e organização digital de
             dados culturais, comunicacionais e acadêmicos.
           </p>

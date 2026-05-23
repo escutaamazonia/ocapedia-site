@@ -40,7 +40,7 @@ export default async function PaginaProducao({
       <div className="mx-auto max-w-5xl">
 
         <a
-          href="/"
+          href="/producoes"
           className="mb-10 inline-block text-sm font-bold uppercase tracking-[0.2em] text-[#17311f]"
         >
           ← Voltar

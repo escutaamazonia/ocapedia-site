@@ -5,12 +5,12 @@ export default function Footer() {
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-4">
           <div className="space-y-5">
             <h5 className="text-2xl font-black text-[#f0d28c]">
-              OCAPÉDIA INDÍGENA
+              OCAPÉDIA AFROINDÍGENA
             </h5>
 
             <p className="leading-relaxed text-[#cbbda2]">
               Plataforma colaborativa dedicada à memória, comunicação,
-              tecnologias e epistemologias indígenas.
+              tecnologias e epistemologias AFROINDÍGENAs.
             </p>
           </div>
 
@@ -46,7 +46,7 @@ export default function Footer() {
             </h6>
 
             <p className="mb-6 text-[#d7cab0]">
-              Atualizações sobre pesquisas, produções e iniciativas indígenas.
+              Atualizações sobre pesquisas, produções e iniciativas Afroindígenas.
             </p>
 
             <div className="space-y-4">
@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
 
           <p className="mt-10 text-sm text-[#5c5244]">
-            © 2026 Ocapédia Indígena • Comunicação, território e memória.
+            © 2026 Ocapédia Afroindígena • Comunicação, território e memória.
           </p>
         </div>
       </section>

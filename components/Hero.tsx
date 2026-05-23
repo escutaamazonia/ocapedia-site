@@ -10,18 +10,18 @@ export default function Hero() {
       <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2">
         <div className="space-y-8">
           <div className="inline-flex rounded-full border border-[#d9a441]/30 bg-[#d9a441]/10 px-4 py-2 text-sm text-[#f0d28c]">
-            Plataforma de memória e comunicação indígena
+            Plataforma de memória e comunicação Afroindígena
           </div>
 
           <div className="space-y-6">
             <h2 className="max-w-3xl text-5xl font-black leading-tight text-[#f7f2e8] lg:text-7xl">
-              Mulheres indígenas comunicando territórios e saberes
+              Mulheres Afroindígenas comunicando territórios e saberes
             </h2>
 
             <p className="max-w-2xl text-lg leading-relaxed text-[#ddd1bb]">
               Plataforma digital colaborativa para organização de produções,
               pesquisas, mídias, oralidades e tecnologias desenvolvidas por
-              mulheres indígenas.
+              mulheres Afroindígenas.
             </p>
           </div>
 

@@ -1,81 +1,65 @@
-export default function Destaques() {
-  const cards: {
-    categoria: string
-    titulo: string
-    descricao: string
-    imagem: string
-  }[] = [
-    {
-      categoria: 'Perfil',
-      titulo: 'Jovita Pankararu',
-      descricao:
-        'Comunicadora, radialista e pesquisadora indígena.',
-      imagem:
-        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-    },
-    {
-      categoria: 'Podcast',
-      titulo: 'Vozes da Floresta',
-      descricao:
-        'Podcast semanal sobre direitos indígenas.',
-      imagem:
-        'https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop',
-    },
-    {
-      categoria: 'Artigo',
-      titulo: 'Tecnologias Ancestrais',
-      descricao:
-        'Reflexões sobre oralidade e epistemologias indígenas.',
-      imagem:
-        'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop',
-    },
-  ]
+async function getDestaques() {
+  try {
+    const res = await fetch(
+      "http://localhost:1337/api/producoes?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=3",
+      {
+        cache: "no-store",
+      }
+    )
+
+    const json = await res.json()
+    return json.data || []
+  } catch {
+    return []
+  }
+}
+
+export default async function Destaques() {
+  const cards = await getDestaques()
 
   return (
-    <section className="bg-[#f1e7d7] py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-14">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.3em] text-[#8d6b2f]">
-            Destaques
-          </p>
+    <section className="bg-[#f3ecdf] py-24">
+      <div className="mx-auto max-w-[1700px] px-6">
+        <div className="grid gap-10 xl:grid-cols-3">
+          {cards.map((card: any) => {
+            const imagem = card.imagem?.url
+              ? `http://localhost:1337${card.imagem.url}`
+              : "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop"
 
-          <h3 className="text-4xl font-black">
-            Conheça histórias e produções
-          </h3>
-        </div>
+            return (
+              <article
+                key={card.id}
+                className="overflow-hidden rounded-[2.5rem] border border-[#d9cfbe] bg-[#f7f1e7] shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <img
+                  src={imagem}
+                  alt={card.titulo}
+                  className="h-[420px] w-full object-cover"
+                />
 
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {cards.map((card) => (
-            <div
-              key={card.titulo}
-              className="overflow-hidden rounded-[2rem] border border-[#d8cab2] bg-[#fbf5ea] shadow-lg"
-            >
-              <div
-                className="h-64 bg-cover bg-center"
-                style={{
-                  backgroundImage: `url(${card.imagem})`,
-                }}
-              />
+                <div className="space-y-8 p-10">
+                  <span className="inline-flex rounded-full bg-[#e7d7b7] px-6 py-3 text-sm font-bold uppercase tracking-[0.3em] text-[#9b7125]">
+                    {card.tipo || "Produção"}
+                  </span>
 
-              <div className="space-y-4 p-8">
-                <span className="inline-flex rounded-full bg-[#d9a441]/15 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-[#8d6b2f]">
-                  {card.categoria}
-                </span>
+                  <h3 className="text-5xl font-black leading-tight text-[#17130f]">
+                    {card.titulo}
+                  </h3>
 
-                <h4 className="text-2xl font-black">
-                  {card.titulo}
-                </h4>
+                  <p className="text-2xl leading-relaxed text-[#4f4638]">
+                    {card.descricao}
+                  </p>
 
-                <p className="text-[#4f4638]">
-                  {card.descricao}
-                </p>
-
-                <button className="font-bold text-[#17311f]">
-                  Explorar →
-                </button>
-              </div>
-            </div>
-          ))}
+                  <a
+                    href={`/producoes/${card.documentId}`}
+                    className="inline-block text-xl font-black uppercase tracking-[0.25em] text-[#17311f] transition hover:translate-x-2"
+                  >
+                    Explorar →
+                  </a>
+                </div>
+              </article>
+            )
+          })}
         </div>
       </div>
     </section>

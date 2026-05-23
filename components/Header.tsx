@@ -1,46 +1,84 @@
+import Link from "next/link"
+
 export default function Header() {
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-[#3b3326]/20 bg-[#102214]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-wide text-[#f0d28c]">
-            OCAPÉDIA INDÍGENA
+    <header className="sticky top-0 z-50 border-b border-[#26452f] bg-[#0f2b1d]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
+
+        <Link href="/" className="space-y-1">
+          <h1 className="text-5xl font-black tracking-tight text-[#f4d88d]">
+            OCAPÉDIA AFROINDÍGENA
           </h1>
 
-          <p className="text-xs uppercase tracking-[0.3em] text-[#d4c29b]">
+          <p className="text-sm uppercase tracking-[0.45em] text-[#d9cfbe]">
             Comunicação • Território • Memória
           </p>
-        </div>
+        </Link>
 
-        <nav className="hidden gap-6 text-sm text-[#efe5d0] md:flex">
-          <a href="#" className="transition hover:text-[#f0d28c]">
+        <nav className="hidden items-center gap-10 lg:flex">
+
+          <Link
+            href="/sobre"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
             Sobre
-          </a>
+          </Link>
 
-          <a href="#" className="transition hover:text-[#f0d28c]">
+          <Link
+            href="/mulheres"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
             Mulheres
-          </a>
+          </Link>
 
-          <a href="#" className="transition hover:text-[#f0d28c]">
-            Territórios
-          </a>
-
-          <a href="#" className="transition hover:text-[#f0d28c]">
+          <Link
+            href="/producoes"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
             Produções
-          </a>
+          </Link>
 
-          <a href="#" className="transition hover:text-[#f0d28c]">
-            Acervo
-          </a>
+          <Link
+            href="/observatorio"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
+            Observatório
+          </Link>
 
-          <a href="#" className="transition hover:text-[#f0d28c]">
-            Mapa
-          </a>
+          <Link
+            href="/observatorio/violencia-genero"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
+            Violência de Gênero
+          </Link>
+
+          <Link
+            href="/metodologia"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
+            Metodologia
+          </Link>
+
+          <Link
+            href="/politica-de-dados"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
+            Política de Dados
+          </Link>
+
+          <Link
+            href="/contato"
+            className="text-xl font-semibold text-[#f1eadf] transition hover:text-[#f4d88d]"
+          >
+            Contato
+          </Link>
+
         </nav>
 
-        <button className="rounded-full bg-[#d9a441] px-5 py-2 text-sm font-semibold text-[#1c160f] shadow-lg transition hover:scale-105">
+        <button className="rounded-full bg-[#d9a441] px-8 py-4 text-lg font-black text-[#1b140d] transition hover:scale-105">
           Colabore
         </button>
+
       </div>
     </header>
   )

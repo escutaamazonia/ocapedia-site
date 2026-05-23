@@ -27,6 +27,8 @@ export default async function MulheresPage() {
     estado: mulher.estado,
     identidade: mulher.identidade,
 
+    categoria_mapa: mulher.categoria_mapa,
+
     foto: mulher.foto?.url
       ? `http://localhost:1337${mulher.foto.url}`
       : undefined,

@@ -12,7 +12,7 @@ export default function PoliticaDeDadosPage() {
 
         <div className="space-y-6 text-lg leading-relaxed text-[#4f4638]">
           <p>
-            A Ocapédia Indígena reconhece que dados, imagens, narrativas,
+            A Ocapédia Afroindígena reconhece que dados, imagens, narrativas,
             documentos e produções culturais não são apenas conteúdos digitais,
             mas expressões de memória, território, identidade e vida coletiva.
           </p>

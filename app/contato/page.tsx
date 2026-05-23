@@ -7,7 +7,7 @@ export default function ContatoPage() {
         </p>
 
         <h1 className="mb-8 text-5xl font-black leading-tight">
-          Entre em contato com a Ocapédia Indígena
+          Entre em contato com a Ocapédia Afroindígena
         </h1>
 
         <div className="space-y-6 text-lg leading-relaxed text-[#4f4638]">
