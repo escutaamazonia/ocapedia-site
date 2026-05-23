@@ -1,3 +1,5 @@
+import { API_URL } from "@/lib/api"
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -71,7 +73,7 @@ export default function MapaObservatorio() {
     async function carregarIndicadores() {
       try {
         const res = await fetch(
-          "http://localhost:1337/api/indicadors"
+          `${API_URL}/api/indicadors`
         )
 
         const json = await res.json()

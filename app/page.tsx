@@ -2,10 +2,11 @@ import Mapa from "@/components/Mapa"
 import Link from "next/link"
 import NuvemVerbetes from "@/components/NuvemVerbetes"
 import AcessibilidadeHeader from "@/components/AcessibilidadeHeader"
+import { API_URL } from "@/lib/api"
 
 async function getCategorias() {
   try {
-    const res = await fetch("http://localhost:1337/api/categorias", {
+    const res = await fetch(`${API_URL}/api/categorias`, {
       cache: "no-store",
     })
 
@@ -19,7 +20,7 @@ async function getCategorias() {
 async function getProducoes() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/producoes?populate=*",
+      `${API_URL}/api/producoes?populate=*`,
       {
         cache: "no-store",
       }
@@ -35,7 +36,7 @@ async function getProducoes() {
 async function getMulheres() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/mulheres?populate=*&pagination[pageSize]=500",
+      `${API_URL}/api/mulheres?populate=*&pagination[pageSize]=500`,
       {
         cache: "no-store",
       }
@@ -50,7 +51,7 @@ async function getMulheres() {
 async function getMulherDestaque() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/mulheres?populate=*&filters[destaque][$eq]=true&pagination[limit]=1",
+      `${API_URL}/api/mulheres?populate=*&filters[destaque][$eq]=true&pagination[limit]=1`,
       {
         cache: "no-store",
       }
@@ -66,7 +67,7 @@ async function getMulherDestaque() {
 async function getProducaoDestaque() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/producoes?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=1",
+      `${API_URL}/api/producoes?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=1`,
       {
         cache: "no-store",
       }
@@ -82,7 +83,7 @@ async function getProducaoDestaque() {
 async function getDocumentoDestaque() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/documentos?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=1",
+      `${API_URL}/api/documentos?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=1`,
       {
         cache: "no-store",
       }
@@ -104,22 +105,22 @@ async function getEstatisticas() {
       coletivosRes,
     ] = await Promise.all([
       fetch(
-        "http://localhost:1337/api/mulheres?pagination[pageSize]=1",
+        `${API_URL}/api/mulheres?pagination[pageSize]=1`,
         { cache: "no-store" }
       ),
 
       fetch(
-        "http://localhost:1337/api/producoes?pagination[pageSize]=1",
+        `${API_URL}/api/producoes?pagination[pageSize]=1`,
         { cache: "no-store" }
       ),
 
       fetch(
-        "http://localhost:1337/api/documentos?pagination[pageSize]=1",
+        `${API_URL}/api/documentos?pagination[pageSize]=1`,
         { cache: "no-store" }
       ),
 
       fetch(
-  "http://localhost:1337/api/mulheres?filters[categoria_mapa][$eq]=coletivo&pagination[pageSize]=1",
+  `${API_URL}/api/mulheres?filters[categoria_mapa][$eq]=coletivo&pagination[pageSize]=1`,
   { cache: "no-store" }
 ),
     ])

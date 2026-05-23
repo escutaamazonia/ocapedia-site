@@ -1,9 +1,10 @@
 import DocumentosBiblioteca from "@/components/DocumentosBiblioteca"
+import { API_URL } from "@/lib/api"
 
 async function getDocumentos() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/documentos?populate=*",
+      `${API_URL}/api/documentos?populate=*`,
       {
         cache: "no-store",
       }

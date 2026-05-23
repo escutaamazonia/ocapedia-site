@@ -1,8 +1,9 @@
 import ColetivosGrid from "@/components/ColetivosGrid"
+import { API_URL } from "@/lib/api"
 
 async function getColetivos() {
   const res = await fetch(
-    "http://localhost:1337/api/mulheres?populate=*&filters[categoria_mapa][$eq]=coletivo&pagination[pageSize]=500",
+    `${API_URL}/api/mulheres?populate=*&filters[categoria_mapa][$eq]=coletivo&pagination[pageSize]=500`,
     {
       cache: "no-store",
     }

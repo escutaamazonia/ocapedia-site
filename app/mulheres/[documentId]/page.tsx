@@ -1,7 +1,9 @@
+import { API_URL } from "@/lib/api"
+
 async function getMulher(documentId: string) {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/mulheres?populate=*&pagination[pageSize]=500",
+      `${API_URL}/api/mulheres?populate=*&pagination[pageSize]=500`,
       {
         cache: "no-store",
       }
@@ -18,7 +20,7 @@ async function getMulher(documentId: string) {
 async function getDocumentosDaMulher(nome: string) {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/documentos?populate=*&pagination[pageSize]=500",
+      `${API_URL}/api/documentos?populate=*&pagination[pageSize]=500`,
       {
         cache: "no-store",
       }
@@ -65,7 +67,7 @@ export default async function MulherPage({
   const documentosRelacionados = await getDocumentosDaMulher(mulher.nome)
 
   const foto = mulher.foto?.url
-    ? `http://localhost:1337${mulher.foto.url}`
+    ? `${API_URL}${mulher.foto.url}`
     : ""
 
   const bioTexto = textoRichText(mulher.bio)
@@ -182,7 +184,7 @@ export default async function MulherPage({
             <div className="grid gap-8 md:grid-cols-2">
               {documentosRelacionados.map((doc: any) => {
                 const pdfUrl = doc.pdf?.url
-                  ? `http://localhost:1337${doc.pdf.url}`
+                  ? `${API_URL}${doc.pdf.url}`
                   : doc.link_documento || "#"
 
                 return (

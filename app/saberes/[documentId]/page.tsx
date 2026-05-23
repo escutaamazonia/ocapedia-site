@@ -1,7 +1,9 @@
+import { API_URL } from "@/lib/api"
+
 async function getSaber(documentId: string) {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/saberes?populate=*&pagination[pageSize]=500",
+      `${API_URL}/api/saberes?populate=*&pagination[pageSize]=500`,
       {
         cache: "no-store",
       }

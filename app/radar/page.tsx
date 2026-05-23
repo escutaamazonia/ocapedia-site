@@ -1,7 +1,9 @@
+import { API_URL } from "@/lib/api"
+
 async function getNarratives() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/social-narratives?sort=createdAt:desc&pagination[pageSize]=100",
+      `${API_URL}/api/social-narratives?sort=createdAt:desc&pagination[pageSize]=100`,
       {
         cache: "no-store",
       }

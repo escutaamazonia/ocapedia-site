@@ -1,7 +1,9 @@
+import { API_URL } from "@/lib/api"
+
 async function getDestaques() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/producoes?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=3",
+      `${API_URL}/api/producoes?populate=*&filters[destaque][$eq]=true&sort=createdAt:desc&pagination[limit]=3`,
       {
         cache: "no-store",
       }
@@ -23,7 +25,7 @@ export default async function Destaques() {
         <div className="grid gap-10 xl:grid-cols-3">
           {cards.map((card: any) => {
             const imagem = card.imagem?.url
-              ? `http://localhost:1337${card.imagem.url}`
+              ? `${API_URL}${card.imagem.url}`
               : "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop"
 
             return (

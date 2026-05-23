@@ -1,3 +1,5 @@
+import { API_URL } from "@/lib/api"
+
 "use client"
 
 import dynamic from "next/dynamic"
@@ -145,7 +147,7 @@ export default function ObservatorioPage() {
     async function carregarRelatorios() {
       try {
         const res = await fetch(
-          "http://localhost:1337/api/relatorios?populate=*"
+          `${API_URL}/api/relatorios?populate=*`
         )
 
         const json = await res.json()

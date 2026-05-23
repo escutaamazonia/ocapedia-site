@@ -1,7 +1,7 @@
 async function getProducoes() {
   try {
     const res = await fetch(
-      "http://localhost:1337/api/producoes?populate=*",
+      `${API_URL}/api/producoes?populate=*",
       {
         cache: "no-store",
       }

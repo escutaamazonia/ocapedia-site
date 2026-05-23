@@ -1,6 +1,8 @@
+import { API_URL } from "@/lib/api"
+
 async function getSaberes() {
   try {
-    const res = await fetch("http://localhost:1337/api/saberes?populate=*", {
+    const res = await fetch(`${API_URL}/api/saberes?populate=*`, {
       cache: "no-store",
     })
 

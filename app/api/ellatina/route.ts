@@ -1,3 +1,4 @@
+import { API_URL } from "@/lib/api"
 export async function POST(req: Request) {
   const body = await req.json()
 
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
       pergunta.includes("comunicadoras")
     ) {
       const res = await fetch(
-        "http://localhost:1337/api/mulheres?pagination[pageSize]=5"
+        `${API_URL}/api/mulheres?pagination[pageSize]=5`
       )
 
       const json = await res.json()
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
       pergunta.includes("produção")
     ) {
       const res = await fetch(
-        "http://localhost:1337/api/producoes?pagination[pageSize]=5"
+        `${API_URL}/api/producoes?pagination[pageSize]=5`
       )
 
       const json = await res.json()
@@ -54,7 +55,7 @@ export async function POST(req: Request) {
       pergunta.includes("verbetes")
     ) {
       const res = await fetch(
-        "http://localhost:1337/api/saberes?pagination[pageSize]=5"
+        `${API_URL}/api/saberes?pagination[pageSize]=5`
       )
 
       const json = await res.json()
@@ -76,7 +77,7 @@ export async function POST(req: Request) {
       pergunta.includes("território")
     ) {
       const res = await fetch(
-        "http://localhost:1337/api/social-narratives?pagination[pageSize]=3&sort=createdAt:desc"
+        `${API_URL}/api/social-narratives?pagination[pageSize]=3&sort=createdAt:desc`
       )
 
       const json = await res.json()

@@ -1,8 +1,9 @@
 import MulheresGrid from "@/components/MulheresGrid"
+import { API_URL } from "@/lib/api"
 
 async function getMulheres() {
   const res = await fetch(
-    "http://localhost:1337/api/mulheres?populate=*&pagination[pageSize]=500",
+    `${API_URL}/api/mulheres?populate=*&pagination[pageSize]=500`,
     {
       cache: "no-store",
     }
