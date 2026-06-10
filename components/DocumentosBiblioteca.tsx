@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 
 function normalizar(valor?: string) {
@@ -392,18 +393,16 @@ export default function DocumentosBiblioteca({
 
       <section className="mx-auto grid max-w-7xl gap-8 px-6 pb-24 md:grid-cols-2 xl:grid-cols-3">
         {documentosFiltrados.map((doc: any) => {
-          const pdfUrl = doc.pdf?.url
-            ? `http://localhost:1337${doc.pdf.url}`
-            : doc.link_documento || "#"
-
+          
           const resumo = textoRichText(doc.resumo)
           const idiomas = getIdiomas(doc)
 
           return (
-            <article
-              key={doc.id}
-              className="rounded-[2rem] border border-[#d8cab2] bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl"
-            >
+  <Link
+    key={doc.id}
+    href={`/documentos/${doc.documentId}`}
+    className="block rounded-[2rem] border border-[#d8cab2] bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl"
+  >
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#8d6b2f]">
                 {doc.tipo_documento || "Documento"} •{" "}
                 {doc.ano_publicacao || "s/d"}
@@ -485,15 +484,10 @@ export default function DocumentosBiblioteca({
                 </div>
               )}
 
-              <a
-                href={pdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-block text-sm font-bold uppercase tracking-[0.2em] text-[#17311f]"
-              >
-                Abrir documento →
-              </a>
-            </article>
+              <span className="mt-8 inline-block text-sm font-bold uppercase tracking-[0.2em] text-[#17311f]">
+  Abrir ficha completa →
+</span>
+            </Link>
           )
         })}
       </section>

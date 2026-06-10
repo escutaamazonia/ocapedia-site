@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function Footer() {
   return (
     <>
@@ -10,7 +12,7 @@ export default function Footer() {
 
             <p className="leading-relaxed text-[#cbbda2]">
               Plataforma colaborativa dedicada à memória, comunicação,
-              tecnologias e epistemologias AFROINDÍGENAs.
+              tecnologias e epistemologias afroindígenas.
             </p>
           </div>
 
@@ -20,10 +22,10 @@ export default function Footer() {
             </h6>
 
             <ul className="space-y-3">
-              <li><a href="/mulheres" className="transition hover:text-[#d9a441]">Mulheres</a></li>
-              <li><a href="/territorios" className="transition hover:text-[#d9a441]">Territórios</a></li>
-              <li><a href="/producoes" className="transition hover:text-[#d9a441]">Produções</a></li>
-              <li><a href="/mapa" className="transition hover:text-[#d9a441]">Mapa</a></li>
+              <li><Link href="/mulheres">Mulheres</Link></li>
+              <li><Link href="/territorios">Territórios</Link></li>
+              <li><Link href="/producoes">Produções</Link></li>
+              <li><Link href="/busca">Busca Integrada</Link></li>
             </ul>
           </div>
 
@@ -33,10 +35,10 @@ export default function Footer() {
             </h6>
 
             <ul className="space-y-3">
-              <li><a href="/metodologia" className="transition hover:text-[#d9a441]">Metodologia</a></li>
-              <li><a href="/politica-de-dados" className="transition hover:text-[#d9a441]">Política de dados</a></li>
-              <li><a href="/colabore" className="transition hover:text-[#d9a441]">Colabore</a></li>
-              <li><a href="/contato" className="transition hover:text-[#d9a441]">Contato</a></li>
+              <li><Link href="/metodologia">Metodologia</Link></li>
+              <li><Link href="/politica-de-dados">Política de dados</Link></li>
+              <li><Link href="/colabore">Colabore</Link></li>
+              <li><Link href="/contato">Contato</Link></li>
             </ul>
           </div>
 
@@ -46,7 +48,7 @@ export default function Footer() {
             </h6>
 
             <p className="mb-6 text-[#d7cab0]">
-              Atualizações sobre pesquisas, produções e iniciativas Afroindígenas.
+              Atualizações sobre pesquisas, produções e iniciativas afroindígenas.
             </p>
 
             <div className="space-y-4">
@@ -56,9 +58,12 @@ export default function Footer() {
                 className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none placeholder:text-[#cdbf9d]"
               />
 
-              <button className="w-full rounded-xl bg-[#d9a441] px-5 py-3 font-bold text-[#1f180f] transition hover:scale-[1.02]">
-                Assinar
-              </button>
+                            <Link
+                href="/busca"
+                className="flex items-center justify-center rounded-xl border border-[#d9a441]/30 px-5 py-3 font-bold text-[#f0d28c] transition hover:bg-[#d9a441]/10"
+              >
+                🔎 Explorar acervo completo
+              </Link>
             </div>
           </div>
         </div>

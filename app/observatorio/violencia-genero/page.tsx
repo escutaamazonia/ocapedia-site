@@ -1,6 +1,6 @@
-import { API_URL } from "@/lib/api"
-
 "use client"
+
+import { API_URL } from "@/lib/api"
 
 import dynamic from "next/dynamic"
 import { useEffect, useState } from "react"
@@ -25,27 +25,35 @@ const MapaObservatorio = dynamic(
 
 const indicadoresBase = [
   {
-    titulo: "Feminicídios",
+    titulo: "Violência de Gênero",
     valor: "19,3%",
-    descricao: "Acima da média nacional",
+    descricao: "Incidência superior à média nacional",
   },
+
   {
-    titulo: "Violência sexual",
+    titulo: "Violência Sexual",
     valor: "36,8%",
-    descricao: "Incidência superior ao restante do Brasil",
+    descricao: "Casos acima da média brasileira",
   },
+
   {
-    titulo: "Municípios monitorados",
+    titulo: "Municípios da Amazônia",
     valor: "772",
-    descricao: "Amazônia Legal",
+    descricao: "Territórios monitorados",
   },
+
   {
-    titulo: "Bases integradas",
+    titulo: "Bases Integradas",
     valor: "8",
-    descricao: "Fontes públicas oficiais",
+    descricao: "IBGE, TSE, SUS, UNICEF, FBSP e outras",
+  },
+
+  {
+    titulo: "Comunicação Amazônica",
+    valor: "31",
+    descricao: "Experiências mapeadas pela OCA",
   },
 ]
-
 const dadosPorEstado = {
   Pará: [
     { ano: "2021", violencia: 24 },
@@ -124,6 +132,8 @@ export default function ObservatorioPage() {
   useState<string>("Todos")
 
   const [relatorios, setRelatorios] = useState<any[]>([])
+  const [indicadoresStrapi, setIndicadoresStrapi] =
+  useState<any[]>([])
 
   useEffect(() => {
     async function carregarPopulacao() {
@@ -145,31 +155,57 @@ export default function ObservatorioPage() {
     }
 
     async function carregarRelatorios() {
-      try {
-        const res = await fetch(
-          `${API_URL}/api/relatorios?populate=*`
-        )
+  try {
+    const res = await fetch(
+      `${API_URL}/api/relatorios?populate=*`
+    )
 
-        const json = await res.json()
+    const json = await res.json()
 
-        setRelatorios(json.data || [])
-      } catch {
-        setRelatorios([])
-      }
-    }
+    setRelatorios(json.data || [])
+  } catch {
+    setRelatorios([])
+  }
+}
+
+async function carregarIndicadores() {
+  try {
+    const res = await fetch(
+      `${API_URL}/api/indicadors`
+    )
+
+    const json = await res.json()
+
+    setIndicadoresStrapi(json.data || [])
+  } catch {
+    setIndicadoresStrapi([])
+  }
+}
 
     carregarPopulacao()
     carregarRelatorios()
+    carregarIndicadores()
   }, [])
 
-  const indicadores = [
-    ...indicadoresBase,
-    {
-      titulo: "População brasileira",
-      valor: populacaoBrasil,
-      descricao: "Projeção oficial em tempo real via API do IBGE",
-    },
-  ]
+  const indicadores =
+  indicadoresStrapi.length > 0
+    ? indicadoresStrapi.map((item: any) => ({
+        titulo: item.titulo,
+        valor: `${item.valor}${item.unidade || ""}`,
+        descricao:
+  item.descricao ||
+  `${item.territorio || "Amazônia Legal"} • ${item.ano || "s/d"}`,
+fonte: item.fonte,
+      }))
+    : [
+        ...indicadoresBase,
+        {
+          titulo: "População brasileira",
+          valor: populacaoBrasil,
+          descricao:
+            "Projeção oficial em tempo real via API do IBGE",
+        },
+      ]
 
   const documentosBase =
   relatorios.length > 0 ? relatorios : fontesViolenciaGenero
@@ -189,19 +225,19 @@ const documentos =
         </p>
 
         <h1 className="max-w-4xl text-5xl font-black leading-tight">
-          Violência de gênero e inteligência territorial na Amazônia Legal
+          Observatório Amazônico de Comunicação, Gênero e Territorialidades
         </h1>
 
         <p className="mt-8 max-w-4xl text-xl leading-relaxed text-[#4f4638]">
-          O Observatório Ocapédia investiga as relações entre violência de
-          gênero, desigualdade territorial, políticas públicas, comunicação e
-          avanço extrativista na Amazônia Legal, articulando dados públicos,
-          memória social e cartografias críticas.
+           Plataforma de inteligência territorial da OCApédia dedicada ao cruzamento
+           de dados públicos, cartografias críticas, comunicação comunitária,
+           violência de gênero, participação política e políticas públicas na
+           Amazônia Legal.
         </p>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-8 px-6 pb-24 md:grid-cols-2 xl:grid-cols-5">
-        {indicadores.map((item) => (
+        {indicadores.map((item: any) => (
           <div
             key={item.titulo}
             className="rounded-[2rem] border border-[#d7cab0] bg-[#fbf5ea] p-8 shadow-sm"
@@ -219,10 +255,15 @@ const documentos =
             <p className="mt-4 leading-relaxed text-[#4f4638]">
               {item.descricao}
             </p>
+            {"fonte" in item && item.fonte && (
+  <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-[#8d6b2f]">
+    Fonte: {item.fonte}
+  </p>
+)}
           </div>
         ))}
       </section>
-
+      
       <section className="mx-auto max-w-7xl px-6 pb-24">
         <div className="mb-10">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.3em] text-[#8d6b2f]">

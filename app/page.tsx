@@ -1,3 +1,4 @@
+import BuscaGlobal from "@/components/BuscaGlobal"
 import Mapa from "@/components/Mapa"
 import Link from "next/link"
 import NuvemVerbetes from "@/components/NuvemVerbetes"
@@ -167,19 +168,17 @@ export default async function OcapediaIndigena() {
     <div className="min-h-screen bg-[#f3ead8] text-[#1f1b16]">
       
       <section
-        className="relative flex min-h-[92vh] items-center overflow-hidden bg-cover pt-32"
-        style={{
+className="relative flex min-h-[92vh] items-center overflow-visible bg-cover pt-32"        style={{
           backgroundImage:
             "linear-gradient(rgba(6,18,9,0.45), rgba(6,18,9,0.55)), url('/images/mulherescapa.jpg')",
           backgroundPosition: "center center",
-        }}
-      >
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2">
+        }}             >
+        <div className="mx-auto grid max-w-7xl gap-1 px-6 lg:grid-cols-2">
           <div className="space-y-8">
-            <div className="inline-flex rounded-full border border-[#d9a441]/30 bg-[#d9a441]/10 px-4 py-2 text-sm text-[#f0d28c]">
+            <div className="inline-flex rounded-full border border-[#d9a441]/30 bg-[#d9a441]/10 px-8 py-2 text-sm text-[#f0d28c]">
               Plataforma de memória e comunicação Afroindígena
             </div>
-
+            
             <div className="space-y-6">
               <h2 className="max-w-3xl text-5xl font-black leading-tight text-[#f7f2e8] lg:text-7xl">
                 Mulheres Afroindígenas comunicando territórios e saberes
@@ -190,6 +189,9 @@ export default async function OcapediaIndigena() {
                 pesquisas, mídias, oralidades e tecnologias desenvolvidas por
                 mulheres Afroindígenas na Amazônia Legal e em outros territórios.
               </p>
+
+<div className="max-w-3xl">
+  <BuscaGlobal compacto />
             </div>
 
             <div className="flex flex-wrap gap-4">
@@ -202,7 +204,7 @@ export default async function OcapediaIndigena() {
               </button>
             </div>
           </div>
-
+</div>
           <div className="hidden items-end justify-end lg:flex">
             <div className="max-w-sm rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-md">
               <p className="text-xl italic leading-relaxed text-[#efe1c1]">
@@ -525,6 +527,15 @@ foto: mulher.foto?.url
         <button className="w-full rounded-xl bg-[#d9a441] px-5 py-2.5 text-sm font-bold text-[#1f180f] transition hover:scale-[1.02]">
           Assinar
         </button>
+        <div className="space-y-3">
+  
+    <Link
+    href="/busca"
+    className="flex items-center justify-center rounded-xl border border-[#d9a441]/30 px-5 py-2.5 text-sm font-bold text-[#f0d28c] transition hover:bg-[#d9a441]/10"
+  >
+    🔎 Explorar acervo completo
+  </Link>
+</div>
       </div>
     </div>
   </div>
