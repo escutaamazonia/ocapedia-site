@@ -1,16 +1,4 @@
 import { API_URL } from "@/lib/api"
-import OpenAI from "openai"
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-
-function normalizar(texto: string) {
-  return String(texto || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-}
 
 function textoSimples(valor: any): string {
   if (!valor) return ""
@@ -82,8 +70,12 @@ async function buscaGlobalOCA(termo: string) {
       `/api/producoes?filters[$or][0][titulo][$containsi]=${q}&filters[$or][1][descricao][$containsi]=${q}&filters[$or][2][resumo][$containsi]=${q}&populate=*&pagination[pageSize]=5`
     ),
 
-    buscar(`/api/saberes?filters[titulo][$containsi]=${q}&populate=*&pagination[pageSize]=5`),
-    buscar(`/api/saberes?filters[Text][$containsi]=${q}&populate=*&pagination[pageSize]=5`),
+    buscar(
+      `/api/saberes?filters[titulo][$containsi]=${q}&populate=*&pagination[pageSize]=5`
+    ),
+    buscar(
+      `/api/saberes?filters[Text][$containsi]=${q}&populate=*&pagination[pageSize]=5`
+    ),
 
     buscar(
       `/api/indicadors?filters[$or][0][titulo][$containsi]=${q}&filters[$or][1][descricao][$containsi]=${q}&filters[$or][2][categoria][$containsi]=${q}&populate=*&pagination[pageSize]=5`
@@ -115,47 +107,43 @@ function juntarResultados(base: any, novo: any) {
   }
 }
 
-function limitarTexto(texto: string, limite = 420) {
+function limitarTexto(texto: string, limite = 320) {
   if (!texto) return ""
   return texto.length > limite ? `${texto.slice(0, limite)}...` : texto
 }
 
-function montarContextoOCA(resultado: any) {
+function montarRespostaOCA(resultado: any, termoBusca: string) {
   const partes: string[] = []
 
+  partes.push(`Segundo os acervos internos da OCA, encontrei conteúdos relacionados a "${termoBusca}".`)
+
   if (resultado.mulheres.length > 0) {
-    partes.push("MULHERES:")
+    partes.push("\nMulheres relacionadas:")
     resultado.mulheres.slice(0, 5).forEach((m: any) => {
       partes.push(
-        `- ${m.nome || "Nome não informado"} | Território: ${
-          m.territorio || "não informado"
-        } | Estado: ${m.estado || "não informado"} | Atuação: ${
-          m.atuacao || "não informada"
-        } | Bio: ${limitarTexto(textoSimples(m.bio))}`
+        `• ${m.nome || "Nome não informado"} — ${m.territorio || "território não informado"} — ${m.estado || "estado não informado"} — ${m.atuacao || "atuação não informada"}. ${limitarTexto(textoSimples(m.bio))}`
       )
     })
   }
 
   if (resultado.documentos.length > 0) {
-    partes.push("\nDOCUMENTOS:")
+    partes.push("\nDocumentos relacionados:")
     resultado.documentos.slice(0, 5).forEach((d: any) => {
+      const resumo = limitarTexto(textoSimples(d.resumo))
+      const ano = d.ano_publicacao || d.ano || "s/d"
+      const autora = d.autora || "autoria não informada"
+
       partes.push(
-        `- ${d.titulo || "Documento sem título"} | Autoria: ${
-          d.autora || "não informada"
-        } | Ano: ${d.ano_publicacao || d.ano || "s/d"} | Resumo: ${limitarTexto(
-          textoSimples(d.resumo)
-        )} | Palavras-chave: ${textoSimples(d.palavras_chave)} | Verbetes: ${textoSimples(
-          d.verbetes_extraidos
-        )}`
+        `• ${d.titulo || "Documento sem título"}, de ${autora} (${ano}). ${resumo}`
       )
     })
   }
 
   if (resultado.producoes.length > 0) {
-    partes.push("\nPRODUÇÕES:")
+    partes.push("\nProduções relacionadas:")
     resultado.producoes.slice(0, 5).forEach((p: any) => {
       partes.push(
-        `- ${p.titulo || "Produção sem título"} | Descrição: ${limitarTexto(
+        `• ${p.titulo || "Produção sem título"} — ${limitarTexto(
           textoSimples(p.descricao || p.resumo)
         )}`
       )
@@ -163,10 +151,10 @@ function montarContextoOCA(resultado: any) {
   }
 
   if (resultado.saberes.length > 0) {
-    partes.push("\nSABERES:")
+    partes.push("\nSaberes e verbetes:")
     resultado.saberes.slice(0, 5).forEach((s: any) => {
       partes.push(
-        `- ${s.titulo || s.Text || "Verbete sem título"} | Texto: ${limitarTexto(
+        `• ${s.titulo || s.Text || "Verbete sem título"} — ${limitarTexto(
           textoSimples(s.Text || s.descricao || s.resumo)
         )}`
       )
@@ -174,58 +162,25 @@ function montarContextoOCA(resultado: any) {
   }
 
   if (resultado.indicadores.length > 0) {
-    partes.push("\nINDICADORES:")
+    partes.push("\nIndicadores do Observatório:")
     resultado.indicadores.slice(0, 5).forEach((i: any) => {
       const valor =
-        i.valor !== undefined ? `${i.valor}${i.unidade || ""}` : "não informado"
+        i.valor !== undefined ? `${i.valor}${i.unidade || ""}` : "valor não informado"
 
       partes.push(
-        `- ${i.titulo || "Indicador sem título"} | Valor: ${valor} | Território: ${
-          i.territorio || "não informado"
-        } | Fonte: ${i.fonte || "não informada"} | Descrição: ${limitarTexto(
-          textoSimples(i.descricao)
-        )}`
+        `• ${i.titulo || "Indicador sem título"}: ${valor} — ${i.territorio || "território não informado"} — ${i.fonte || "fonte não informada"}. ${limitarTexto(textoSimples(i.descricao))}`
       )
     })
   }
 
   if (resultado.radar.length > 0) {
-    partes.push("\nRADAR AMAZÔNICO:")
+    partes.push("\nRadar Amazônico:")
     resultado.radar.slice(0, 5).forEach((r: any) => {
-      partes.push(`- ${limitarTexto(textoSimples(r.content || r.titulo || r.title))}`)
+      partes.push(`• ${limitarTexto(textoSimples(r.content || r.titulo || r.title))}`)
     })
   }
 
   return partes.join("\n")
-}
-
-async function gerarRespostaComIA(pergunta: string, contexto: string) {
-  const resposta = await openai.responses.create({
-    model: "gpt-4o-mini",
-    instructions: `
-Você é a ELLATINA, assistente de inteligência documental e territorial da OCA.
-
-Regras obrigatórias:
-- Responda exclusivamente com base no CONTEXTO OCA fornecido.
-- Não use conhecimento externo.
-- Não invente informações.
-- Se o contexto não trouxer dados suficientes, diga que o acervo da OCA ainda não possui informação suficiente sobre o tema.
-- Sua função é organizar, relacionar e sintetizar conteúdos autorizados do acervo.
-- Não substitua saberes tradicionais, não fale como autoridade comunitária e não apresente saberes não documentados como verdade geral.
-- Use linguagem clara, respeitosa, acadêmica e acessível.
-- Quando útil, cite "Segundo o acervo da OCA" ou "Nos materiais cadastrados na OCA".
-- Ao final, liste brevemente os conteúdos consultados, sem exagerar.
-    `,
-    input: `
-PERGUNTA DO USUÁRIO:
-${pergunta}
-
-CONTEXTO OCA:
-${contexto}
-    `,
-  })
-
-  return resposta.output_text
 }
 
 export async function POST(req: Request) {
@@ -268,18 +223,15 @@ export async function POST(req: Request) {
       })
     }
 
-    const contextoOCA = montarContextoOCA(resultadoGlobal)
-    const respostaIA = await gerarRespostaComIA(perguntaOriginal, contextoOCA)
-
     return Response.json({
-      answer: respostaIA,
+      answer: montarRespostaOCA(resultadoGlobal, termoBusca),
     })
   } catch (error) {
     console.error("Erro na ELLATINA:", error)
 
     return Response.json({
       answer:
-        "Não consegui acessar os acervos da OCA agora. Verifique se o Strapi está ativo, se a API_URL está correta e se a OPENAI_API_KEY está configurada.",
+        "Não consegui acessar os acervos da OCA agora. Verifique se o Strapi está ativo e se a API_URL está correta.",
     })
   }
 }
